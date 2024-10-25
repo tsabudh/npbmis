@@ -52,7 +52,7 @@ const CustomSelect = ({ options, defaultLabel, onChangeFunction }) => {
               className={cx("dropdown-item")}
               onClick={() => handleOptionSelect(option)}
             >
-              {option.name}
+              {option?.name}
             </div>
           ))}
         </div>
