@@ -5,7 +5,7 @@ import vercel from 'vite-plugin-vercel';
 
 const API_URI =
   process.env.NODE_ENV === "production"
-    ? "https://npbmis-server.vercel.app"
+    ? "https://npbmis-server.vercel.app/api/v1"
     : "http://localhost:3000/api/v1";
 
 export default defineConfig({
