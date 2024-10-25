@@ -1,0 +1,15 @@
+@use "/src/scss/abstract/variables" as vars;
+@use "/src/scss/abstract/mixins" as mixins;
+
+.link-item {
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+
+  &.rounded {
+    border-radius: 0.5rem;
+  }
+
+  &:hover {
+    background-color: vars.$c-gray-200;
+  }
+}

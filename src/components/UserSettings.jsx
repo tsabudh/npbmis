@@ -8,6 +8,7 @@ import Button from "./Button";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import AuthContext from "../context/AuthContext";
 import changePassword from "../apis/changePassword";
+import LoaderSpinner from "./LoaderSpinner";
 
 const cx = classNames.bind(styles);
 
@@ -64,7 +65,7 @@ function UserSettings() {
 
   const {
     mutate: submitForm,
-    isLoading,
+    status,
     error,
     data,
   } = useMutation({
@@ -72,9 +73,16 @@ function UserSettings() {
     onSuccess: (data) => {
       // Handle success (optional)
       setSuccessMessage("Password successfully changed.");
+      setErrorMessages("");
+      setFormData({
+        password: "",
+        confirmPassword: "",
+      });
     },
     onError: (error) => {
       // Handle error (optional)
+      setSuccessMessage("");
+      setErrorMessages(error.message);
       console.error("Error changing password:", error);
     },
   });
@@ -129,15 +137,20 @@ function UserSettings() {
             </div>
           </div>
 
-          <footer className={cx("form-footer")}>
-            <Button className={"submit "} onClick={handleFormSubmit}>
-              Save changes
-            </Button>
-            {isLoading ? <span>Loading...</span> : "undefined"}
-            <div className={cx("errors")}>{errorMessages}</div>
-            <div className={cx("success")}>{successMessage}</div>
+          <footer className={cx("footer")}>
+            <section className={cx("main")}>
+              <Button className={"submit "} onClick={handleFormSubmit}>
+                Save changes
+              </Button>
+
+              <LoaderSpinner state={status} />
+            </section>
+
+            <section className={cx("message")}>
+              <div className={cx("errors")}>{errorMessages}</div>
+              <div className={cx("success")}>{successMessage}</div>
+            </section>
           </footer>
-          
         </form>
       </main>
     </section>

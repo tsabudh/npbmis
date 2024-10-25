@@ -39,7 +39,11 @@
           outline: none;
           line-height: 1em;
 
+          &:hover {
+            border-color: vars.$c-blue-fair-200;
+          }
           &:focus {
+            border-color: vars.$c-blue-fair-200;
             box-shadow: 0 0 2px vars.$c-gray-800;
           }
         }
@@ -55,10 +59,23 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
-        gap: 4rem;
+        gap: 2rem;
 
         & > div {
           // flex-grow: 2;
+        }
+      }
+
+      & .footer {
+        & .main {
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        & .message {
+          margin-top: 1rem;
         }
       }
     }

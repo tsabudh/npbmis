@@ -25,7 +25,6 @@ function App() {
   const queryClient = new QueryClient();
 
   // i18n.changeLanguage(locale);
-  console.log("this is root app");
   return (
     <AuthContext.Provider
       value={{

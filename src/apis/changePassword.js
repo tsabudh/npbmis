@@ -13,13 +13,17 @@ async function changePassword(payload, jwtToken) {
 
     // Handle the response
     if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
+      console.log("response is not okay");
+      const errorData = await response.json(); // Parse the error JSON response
 
-    const result = response.json(); // Parse the JSON response
-    return result;
+      throw new Error(errorData?.message || `Error: ${response.status}`);
+    } else {
+      const result = await response.json(); // Parse the JSON response
+      return result;
+    }
   } catch (error) {
-    console.error("Error submitting project:", error.message);
+    console.error("Error changing password:", error.message);
+    throw error;
   }
 }
 export default changePassword;

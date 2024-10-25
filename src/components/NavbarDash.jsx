@@ -13,6 +13,7 @@ import IconUser from "./vectors/IconUser";
 import LocaleContext from "../context/LocaleContext";
 import { useTranslation } from "react-i18next";
 import Dropdown from "./Dropdown";
+import LinkItem from "./LinkItem";
 
 const cx = classnames.bind(styles);
 
@@ -66,13 +67,24 @@ function NavbarDash() {
           </li>
           <li>
             <div className={cx("user")} ref={userRef}>
-              <IconUser className={cx("user-icon")} onClick={() => setIsOpen((_) => !isOpen)} />
+              <IconUser
+                className={cx("user-icon")}
+                onClick={() => setIsOpen((_) => !isOpen)}
+              />
 
               <div className={cx("dropdown", isOpen ? "open" : "")}>
                 <ul className={cx("list")}>
-                  <li className={cx("list-item")}>settings</li>
                   <li className={cx("list-item")}>
-                    Logout <IoLogOutOutline />
+                    <LinkItem className={"rounded"} to="/dashboard/settings">
+                      Settings
+                    </LinkItem>
+                  </li>
+                  <li className={cx("list-item")}>
+                    <LinkItem className={"rounded"} to="/logout">
+                      <div className={cx("nowrap")}>
+                        <span>Logout</span> <IoLogOutOutline />
+                      </div>
+                    </LinkItem>
                   </li>
                 </ul>
               </div>

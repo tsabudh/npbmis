@@ -45,9 +45,13 @@
           border: 1px solid vars.$c-blue-fair-100;
           border-radius: 5px;
           outline: none;
-          line-height: 1em  ;
+          line-height: 1em;
 
+          &:hover {
+            border-color: vars.$c-blue-fair-200;
+          }
           &:focus {
+            border-color: vars.$c-blue-fair-200;
             box-shadow: 0 0 2px vars.$c-gray-800;
           }
         }
@@ -63,7 +67,11 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
-        gap: 4rem;
+        gap: 2.6rem;
+
+        background-color: vars.$c-white;
+        padding: 1rem;
+        border-radius: 1rem;
 
         & > div {
           // flex-grow: 2;
@@ -74,7 +82,11 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
-        gap: 4rem;
+        gap: 2.6rem;
+
+        background-color: vars.$c-white;
+        padding: 1rem;
+        border-radius: 1rem;
 
         & > fieldset {
           // flex-grow: 2;

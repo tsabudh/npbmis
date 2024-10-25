@@ -1,6 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import LocaleContext from "../context/localeContext";
-import changeLanguage from "../hooks/useLanguage";
+
 import { useTranslation } from "react-i18next";
 import LoginFrom from "../components/LoginForm";
 import AuthContext from "../context/AuthContext";
