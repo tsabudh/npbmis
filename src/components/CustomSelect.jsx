@@ -41,7 +41,7 @@ const CustomSelect = ({ options, defaultLabel, onChangeFunction }) => {
   return (
     <div className={cx("custom-select")} ref={dropdownRef}>
       <button className={cx("select-button")} onClick={toggleDropdown}>
-        {selectedOption.name} <span className={cx("arrow")}>▼</span>
+        {selectedOption?.name} <span className={cx("arrow")}>▼</span>
       </button>
 
       {isOpen && (
