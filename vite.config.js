@@ -1,5 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import vercel from 'vite-plugin-vercel';
+
 
 const API_URI =
   process.env.NODE_ENV === "production"
@@ -7,7 +9,7 @@ const API_URI =
     : "http://localhost:3000/api/v1";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(),vercel()],
   server: {
     host: true,
   },
