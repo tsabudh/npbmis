@@ -1,0 +1,91 @@
+@use "/src/scss/abstract/variables" as vars;
+@use "/src/scss/abstract/mixins" as mixins;
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 99999;
+
+  height: auto;
+  padding: 1rem 2.4rem;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 0.5rem;
+  gap: 2rem;
+
+  min-height: 2em;
+  background-color: vars.$c-gray-100;
+
+  @include mixins.respond(tab-port) {
+    top: 0;
+    flex-direction: row;
+    height: auto;
+    width: 100%;
+    max-width: none;
+    padding: 0.5rem 0.5rem;
+
+    justify-content: space-between;
+  }
+
+  & .brand {
+    & svg {
+      @include mixins.respond(tab-port) {
+        height: 3rem;
+      }
+    }
+
+    & svg {
+      font-size: 10rem;
+      color: white;
+
+      & .krishna {
+        // color: red;
+        // stroke: red;
+      }
+    }
+  }
+  &_menu {
+    align-self: flex-end;
+
+    @include mixins.respond(tab-port) {
+      align-self: auto;
+    }
+
+    & ul {
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+      list-style-type: none;
+      gap: 2rem;
+
+      @include mixins.respond(tab-port) {
+        flex-direction: row;
+        height: auto;
+      }
+      & a {
+        flex-basis: 15rem;
+        font-weight: 300;
+        letter-spacing: 1px;
+        font-size: 1.8rem;
+        color: white;
+        // color: vars.$color-green;
+        // border-bottom: 2px solid vars.$color-green;
+        padding: 0.5rem 0.5rem;
+        text-transform: uppercase;
+        text-decoration: none;
+
+        transition: color 0.2s ease, border-color 0.2s ease;
+        // @include mixins.fluid('margin-inline', 2rem, 7rem);
+
+        @include mixins.respond(tab-port) {
+          font-size: 1.6rem;
+        }
+        &:hover {
+          color: vars.$c-rose-fair-500;
+        }
+      }
+    }
+  }
+}

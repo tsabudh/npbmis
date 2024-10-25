@@ -1,0 +1,78 @@
+@use "/src/scss/abstract/variables" as vars;
+@use "/src/scss/abstract/mixins" as mixins;
+
+.section-navbar {
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 1rem;
+  padding-block: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 9999999;
+  background-color: vars.$c-blue-fair-200;
+  height: 5rem;
+  // overflow-x: hidden;
+
+  & .brand {
+  }
+  & .date {
+    font-family: "Noto Sans Devanagari", sans-serif;
+  }
+  & .lang {
+  }
+
+  & .navbar_menu {
+    & ul {
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      gap: 1rem;
+    }
+  }
+  & .user {
+    position: relative;
+
+    &-icon {
+      cursor: pointer;
+      &:hover {
+        filter: hue-rotate(100deg);
+      }
+    }
+
+    & .dropdown {
+      display: none;
+
+      &.open {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 10;
+        display: block;
+
+        background-color: vars.$c-white;
+        padding: 1rem;
+        border: 1px solid vars.$c-blue-fair-200;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 2rem;
+      }
+
+      & .list {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 1rem;
+
+        &-item {
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+          gap: 1rem;
+
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

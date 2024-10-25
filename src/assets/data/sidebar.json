@@ -1,0 +1,84 @@
+[
+  {
+    "title": "overview",
+    "nepali-title": "अवलोकन",
+    "icon": "bi-gear-fill",
+    "identity": "menu",
+    "path": "/dashboard"
+  },
+  {
+    "title": "office",
+    "nepali-title": "कार्यालय",
+    "icon": "bi-gear-fill",
+    "identity": "menu",
+    "path": "/dashboard/office",
+    "children": [
+      {
+        "title": "overview",
+        "nepali-title": "अवलोकन",
+        "path": "/dashboard/office",
+        "identity": "sub-menu"
+      },
+      {
+        "title": "staffs",
+        "nepali-title": "कर्मचारीहरू",
+        "path": "/dashboard/office/staffs",
+        "identity": "sub-menu"
+      }
+    ]
+  },
+  {
+    "title": "projects",
+    "nepali-title": "परियोजनाहरू",
+    "icon": "bi-person-fill",
+    "identity": "menu",
+    "children": [
+      {
+        "title": "overview",
+        "nepali-title": "अवलोकन",
+        "path": "/dashboard/projects",
+        "identity": "sub-menu"
+      },
+      {
+        "title": "add",
+        "nepali-title": "थप्नुहोस्",
+        "path": "/dashboard/projects/add",
+        "identity": "sub-menu"
+      }
+    ]
+  },
+  {
+    "title": "products",
+    "nepali-title": "उत्पादनहरू",
+    "icon": "bi-person-fill",
+    "identity": "menu",
+    "children": [
+      {
+        "title": "overview",
+        "nepali-title": "अवलोकन",
+        "path": "/dashboard/products",
+        "identity": "sub-menu"
+      },
+      {
+        "title": "manage",
+        "nepali-title": "प्रबन्ध गर्नुहोस्",
+        "path": "/dashboard/products/manage",
+        "identity": "sub-menu",
+        "adminOnly": true
+      }
+    ]
+  },
+  {
+    "title": "profile",
+    "nepali-title": "प्रोफाइल",
+    "icon": "bi-info-circle-fill",
+    "identity": "menu",
+    "path": "/dashboard/profile"
+  },
+  {
+    "title": "chat",
+    "icon": "bi-info-circle-fill",
+    "identity": "menu",
+    "path": "/dashboard/chat"
+  }
+]

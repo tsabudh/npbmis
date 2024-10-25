@@ -1,0 +1,19 @@
+@use "/src/scss/abstract/variables" as vars;
+@use "/src/scss/abstract/mixins" as mixins;
+
+.project-card-simple {
+  background-color: vars.$c-blue-fair-100;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  
+
+  & .header {
+    & .h3 {
+      color: vars.$c-blue-gray-900;
+    }
+  }
+
+  & .main {
+    color: vars.$c-blue-gray-700;
+  }
+}

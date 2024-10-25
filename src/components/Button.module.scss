@@ -1,0 +1,73 @@
+@use "/src/scss/abstract/variables" as vars;
+@use "/src/scss/abstract/mixins" as mixins;
+
+button {
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 1em;
+  font-family: Urbanist;
+  letter-spacing: 0.4px;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid transparent;
+  outline: none;
+  cursor: pointer;
+
+  &.rounded {
+    border-radius: 1.2em;
+  }
+  &.small-padding {
+    padding: 0.4rem 0.6rem;
+  }
+  &.small-font {
+    font-size: 1.4rem;
+  }
+  &.primary {
+    background: vars.$c-blue-fair-600;
+    color: vars.$c-white;
+
+    &:hover {
+      background: vars.$c-white;
+      color: vars.$c-blue-fair-600;
+      border-color: vars.$c-blue-fair-400;
+    }
+    &:active {
+      background: vars.$c-blue-fair-100;
+      color: vars.$c-blue-fair-600;
+      border-color: vars.$c-blue-fair-400;
+    }
+  }
+
+  &.gray {
+    background: vars.$c-gray-200;
+    color: vars.$c-gray-700;
+
+    &:hover {
+      background: vars.$c-gray-400;
+      color: vars.$c-white;
+      border-color: transparent;
+    }
+    &:active {
+      background: vars.$c-blue-fair-100;
+      color: vars.$c-blue-fair-600;
+      border-color: vars.$c-blue-fair-400;
+    }
+  }
+
+  &.submit {
+    background: vars.$c-blue-fair-800;
+    color: vars.$c-white;
+
+    &:hover {
+      background: vars.$c-white;
+      color: vars.$c-blue-fair-600;
+      border-color: vars.$c-blue-fair-800;
+    }
+    &:active {
+      background: vars.$c-blue-fair-100;
+      color: vars.$c-blue-fair-600;
+      border-color: vars.$c-blue-fair-400;
+    }
+  }
+}
