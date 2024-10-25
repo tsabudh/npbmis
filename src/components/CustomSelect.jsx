@@ -35,7 +35,7 @@ const CustomSelect = ({ options, defaultLabel, onChangeFunction }) => {
   }, [dropdownRef]);
 
   useEffect(() => {
-    onChangeFunction(selectedOption.value);
+    onChangeFunction(selectedOption?.value);
   }, [selectedOption]);
 
   return (
