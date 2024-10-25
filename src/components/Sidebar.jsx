@@ -13,7 +13,7 @@ import LocaleContext from "../context/LocaleContext";
 
 const cx = classNames.bind(styles);
 
-export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
+ function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
   const [expanded, setExpanded] = useState(null);
   const { userRole } = useContext(AuthContext);
   const { locale } = useContext(LocaleContext);
@@ -63,3 +63,5 @@ export default function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
     </div>
   );
 }
+
+export default Sidebar;
