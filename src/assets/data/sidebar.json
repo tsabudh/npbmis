@@ -2,26 +2,28 @@
   {
     "title": "overview",
     "nepali-title": "अवलोकन",
-    "icon": "bi-gear-fill",
+    "icon": "LuAreaChart",
     "identity": "menu",
     "path": "/dashboard"
   },
   {
     "title": "office",
     "nepali-title": "कार्यालय",
-    "icon": "bi-gear-fill",
+    "icon": "LuBuilding2",
     "identity": "menu",
     "path": "/dashboard/office",
     "children": [
       {
         "title": "overview",
         "nepali-title": "अवलोकन",
+        "icon": "LuFileBadge",
         "path": "/dashboard/office",
         "identity": "sub-menu"
       },
       {
         "title": "staffs",
         "nepali-title": "कर्मचारीहरू",
+        "icon": "LuUserCog",
         "path": "/dashboard/office/staffs",
         "identity": "sub-menu"
       }
@@ -30,18 +32,20 @@
   {
     "title": "projects",
     "nepali-title": "परियोजनाहरू",
-    "icon": "bi-person-fill",
+    "icon": "LuFolderKanban",
     "identity": "menu",
     "children": [
       {
         "title": "overview",
         "nepali-title": "अवलोकन",
+        "icon": "LuBarChart3",
         "path": "/dashboard/projects",
         "identity": "sub-menu"
       },
       {
         "title": "add",
         "nepali-title": "थप्नुहोस्",
+        "icon": "LuFolderPlus",
         "path": "/dashboard/projects/add",
         "identity": "sub-menu"
       }

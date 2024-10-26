@@ -13,7 +13,7 @@ function ProjectRegistration() {
   const [projectNameNepali, setProjectNameNepali] = useState("");
   const [projectBudgetCode, setProjectBudgetCode] = useState("");
   const [projectStatus, setProjectStatus] = useState("");
-  const [projectBudgetStatus, setProjectBudgetStatus] = useState("");
+  const [projectInceptionStatus, setProjectInceptionStatus] = useState("");
   const [projectSector, setProjectSector] = useState("");
 
   const { jwtToken } = useContext(AuthContext);
@@ -31,7 +31,7 @@ function ProjectRegistration() {
       nepaliName: formData.get("projectNameNepali"),
       budgetCode: formData.get("projectBudgetCode"),
       status: formData.get("status"),
-      budgetStatus: formData.get("budgetStatus"),
+      inceptionStatus: formData.get("inceptionStatus"),
       sector: formData.get("sector"),
     };
 
@@ -84,7 +84,6 @@ function ProjectRegistration() {
                 onChange={(e) => setProjectNameNepali(e.target.value)}
                 value={projectNameNepali}
               />
-              
             </div>
             <div className={cx("input-field")}>
               <label htmlFor="projectBudgetCode" className={cx("label")}>
@@ -153,9 +152,9 @@ function ProjectRegistration() {
                   type="radio"
                   className={cx("input-radio")}
                   value="IDENTIFICATION"
-                  name="budgetStatus"
-                  onChange={(e) => setProjectBudgetStatus(e.target.value)}
-                  checked={projectBudgetStatus === "IDENTIFICATION"}
+                  name="inceptionStatus"
+                  onChange={(e) => setProjectInceptionStatus(e.target.value)}
+                  checked={projectInceptionStatus === "IDENTIFICATION"}
                 />
                 <label
                   htmlFor="project-budget-status-radio-new"
@@ -171,9 +170,9 @@ function ProjectRegistration() {
                   type="radio"
                   className={cx("input-radio")}
                   value="EVALUATION"
-                  name="budgetStatus"
-                  onChange={(e) => setProjectBudgetStatus(e.target.value)}
-                  checked={projectBudgetStatus === "EVALUATION"}
+                  name="inceptionStatus"
+                  onChange={(e) => setProjectInceptionStatus(e.target.value)}
+                  checked={projectInceptionStatus === "EVALUATION"}
                 />
                 <label
                   htmlFor="project-budget-status-radio-ongoing"

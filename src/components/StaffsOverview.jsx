@@ -11,11 +11,13 @@ import AuthContext from "../context/AuthContext";
 
 import Button from "./Button";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 const cx = classnames.bind(styles);
 
 function StaffsOverview() {
   const [users, setUsers] = useState([]);
   const { jwtToken } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function asyncWrapper() {
@@ -46,7 +48,10 @@ function StaffsOverview() {
         <h2> Office staff&apos;s description</h2>
         <div className={cx("button-container")}>
           {/*//TODO Create a modal to add a new staff.   */}
-          <Button className={"primary small-padding rounded"}>
+          <Button
+            className={"primary small-padding rounded"}
+            onClick={() => navigate("./add")}
+          >
             <IoAddSharp />
             <span> Add staff</span>
           </Button>

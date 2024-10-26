@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import classNames from "classnames/bind";
+import * as Icons from "react-icons/lu";
 
 import { IoMenuSharp } from "react-icons/io5";
 
@@ -8,12 +9,11 @@ import items from "../assets/data/sidebar.json";
 import AuthContext from "../context/AuthContext";
 
 import SidebarItem from "./SidebarItem";
-import { NavLink } from "react-router-dom";
 import LocaleContext from "../context/LocaleContext";
 
 const cx = classNames.bind(styles);
 
- function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
+function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
   const [expanded, setExpanded] = useState(null);
   const { userRole } = useContext(AuthContext);
   const { locale } = useContext(LocaleContext);
@@ -47,6 +47,8 @@ const cx = classNames.bind(styles);
       </div>
 
       {items.map((item, index) => {
+        const IconComponent = Icons[item.icon];
+
         if (userRole !== "SUPER_ADMIN" && item.adminOnly) return null;
         return (
           <SidebarItem
@@ -57,6 +59,7 @@ const cx = classNames.bind(styles);
             handleExpand={handleExpand}
             expanded={expanded}
             locale={locale}
+            IconComponent={IconComponent}
           />
         );
       })}

@@ -5,7 +5,7 @@ import { HiOutlineQuestionMarkCircle } from "react-icons/hi";
 
 import styles from "./UserSettings.module.scss";
 import Button from "./Button";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import AuthContext from "../context/AuthContext";
 import changePassword from "../apis/changePassword";
 import LoaderSpinner from "./LoaderSpinner";

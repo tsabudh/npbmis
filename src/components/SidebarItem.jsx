@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import classNames from "classnames/bind";
+import * as Icons from "react-icons/lu";
 
 import { SlArrowDown } from "react-icons/sl";
 
@@ -8,11 +9,19 @@ import styles from "./SidebarItem.module.scss";
 import AuthContext from "../context/AuthContext";
 const cx = classNames.bind(styles);
 
-function SidebarItem({ item, id, expanded, handleExpand, locale }) {
+function SidebarItem({
+  item,
+  id,
+  expanded,
+  handleExpand,
+  locale,
+}) {
   const navigate = useNavigate();
   const location = useLocation();
   const [active, setActive] = useState();
   const { userRole } = useContext(AuthContext);
+
+  const IconComponent = Icons[item.icon];
 
   const handleNavigate = (e) => {
     if (item.identity == "menu") {
@@ -33,16 +42,13 @@ function SidebarItem({ item, id, expanded, handleExpand, locale }) {
 
   if (item.children) {
     return (
-      <div className={cx("sidebar-item", { open: expanded == id })}>
-        {/* <div className={open ? "sidebar-item open" : "sidebar-item"}> */}
+      <div className={cx("sidebar-item", { open: expanded === id })}>
         <div
-          className={`${cx("sidebar-title")} 
-                       `}
+          className={cx("sidebar-title", { active: active })}
           onClick={() => handleExpand(id)}
         >
+          {IconComponent ? <IconComponent /> : null}
           <span className={cx({ active: active })}>
-            {/* ITEM ICON  */}
-
             {locale === "ne" ? item["nepali-title"] : item.title}
           </span>
           <div className={cx("toggle-btn")}>
@@ -51,7 +57,7 @@ function SidebarItem({ item, id, expanded, handleExpand, locale }) {
         </div>
         <div className={cx("sidebar-content")}>
           {item.children.map((child, index) => {
-            if (userRole == "customer" && item.adminOnly) return null;
+            if (item.adminOnly) return null;
 
             return (
               <SidebarItem
@@ -67,16 +73,12 @@ function SidebarItem({ item, id, expanded, handleExpand, locale }) {
       </div>
     );
   } else {
-    if (userRole == "customer" && item.adminOnly) return null;
+    if (item.adminOnly) return null;
     return (
       <div onClick={handleNavigate} className={`${cx("sidebar-item")} `}>
-        {item.icon && <i className={item.icon}></i>}
-        <div
-          className={`${
-            item.identity === "menu" ? cx("sidebar-title") : cx("plain")
-          }`}
-        >
-          <span className={active ? styles.active : ""}>
+        <div className={cx("sidebar-title", { active: active })}>
+          {IconComponent ? <IconComponent /> : null}
+          <span className={cx({ active: active })}>
             {locale === "ne" ? item["nepali-title"] : item.title}
           </span>
         </div>

@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import styles from "./App.module.scss";
 import LocaleContext from "./context/LocaleContext";
 
-import { Route, Routes } from "react-router-dom";
+import { Outlet, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import LoginPage from "./pages/LoginPage";
@@ -17,6 +17,7 @@ import LandingSection from "./components/LandingSection";
 import StaffsOverview from "./components/StaffsOverview";
 import i18n from "./config/i18n";
 import UserSettings from "./components/UserSettings";
+import StaffRegistration from "./components/StaffRegistration";
 
 function App() {
   const [locale, setLocale] = useState("en");
@@ -49,12 +50,13 @@ function App() {
               <Route path="users">
                 <Route index element={<StaffsOverview />} />
               </Route>
-              <Route path="office">
+              <Route path="office" element={<Outlet />}>
                 <Route path="staffs">
                   <Route index element={<StaffsOverview />} />
+                  <Route path="add" element={<StaffRegistration />} />
                 </Route>
               </Route>
-              <Route path="settings">
+              <Route path="settings" element={<Outlet />}>
                 <Route index element={<UserSettings />} />
               </Route>
             </Route>
