@@ -1,11 +1,14 @@
 import React, { useCallback, useContext, useState } from "react";
-import classNames from "classnames/bind";
-import IconCheckmark from "../components/vectors/IconCheckmark";
-import styles from "./StaffRegistration.module.scss";
-import Button from "./Button";
+import validator from "validator";
 import { useMutation } from "@tanstack/react-query";
-import addUser from "../apis/addUser";
+import classNames from "classnames/bind";
+
 import AuthContext from "../context/AuthContext";
+import styles from "./StaffRegistration.module.scss";
+
+import IconCheckmark from "../components/vectors/IconCheckmark";
+import Button from "./Button";
+import addUser from "../apis/addUser";
 
 const cx = classNames.bind(styles);
 
@@ -24,6 +27,28 @@ function StaffRegistration() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
+
+    if (validator.isEmpty(firstName) || validator.isEmpty(lastName)) {
+      setErrorMessages("First name and last name cannot be empty.");
+      return;
+    } else if (!validator.isAlpha(firstName) || !validator.isAlpha(lastName)) {
+      setErrorMessages(
+        "First name and last name should only contain alphabets."
+      );
+      return;
+    } else if (!validator.isEmail(email)) {
+      setErrorMessages("Please enter a valid email address.");
+      return;
+    } else if (validator.isEmpty(username)) {
+      setErrorMessages("Username cannot be empty.");
+      return;
+    } else if (validator.isEmpty(password)) {
+      setErrorMessages("Password cannot be empty.");
+      return;
+    } else if (validator.isEmpty(staffRole)) {
+      setErrorMessages("Please select a role for the staff.");
+      return;
+    }
 
     const payload = {
       firstName,
@@ -46,7 +71,7 @@ function StaffRegistration() {
     mutationFn: ({ payload, jwtToken }) => addUser(payload, jwtToken),
     onSuccess: (data) => {
       // Handle success (optional)
-      setSuccessMessage("Password successfully changed.");
+      setSuccessMessage("User successfully created.");
       setErrorMessages("");
 
       setFirstName("");
