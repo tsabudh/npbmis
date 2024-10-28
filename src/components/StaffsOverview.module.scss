@@ -50,6 +50,7 @@
             background-color: vars.$c-gray-50;
             border: none;
             padding-inline: 1rem;
+            padding-block: 0.5rem;
 
             &.name {
               text-transform: capitalize;
@@ -71,6 +72,15 @@
       & .label {
         font-size: 1.2rem;
       }
+    }
+  }
+
+  & .modal {
+    & .api-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 0.6rem;
     }
   }
 }
