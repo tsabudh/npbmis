@@ -12,15 +12,18 @@ async function addUser(userData, jwtToken) {
       body: JSON.stringify(userData),
     });
 
-    // Handle the response
+    // Check if response is OK (status in the 200–299 range)
     if (!response.ok) {
       const errorData = await response.json();
+      const error = new Error("Failed to login");
+      error.status = response.status;
+      error.data = errorData;
+      throw error;
+    } 
 
-      throw new Error(errorData?.message || `Error: ${response.status}`);
-    } else {
-      const result = await response.json();
-      return result;
-    }
+    // If the response is OK, parse and return the JSON data
+    return  await response.json();
+
   } catch (error) {
     console.error("Error adding user:", error.message);
     throw error;

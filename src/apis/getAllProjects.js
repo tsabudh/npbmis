@@ -10,15 +10,20 @@ async function getAllProjects(jwtToken) {
       },
     });
 
-    // Handle the response
+    // Check if response is OK (status in the 200–299 range)
     if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
+      const errorData = await response.json();
+      const error = new Error("Failed to login");
+      error.status = response.status;
+      error.data = errorData;
+      throw error;
     }
 
-    const result = await response.json(); 
-    return result;
+    // If the response is OK, parse and return the JSON data
+    return await response.json();
   } catch (error) {
-    console.error("Error submitting project:", error.message);
+    console.error("Error fetching projects:", error);
+    throw error;
   }
 }
 export default getAllProjects;

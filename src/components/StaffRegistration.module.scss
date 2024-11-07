@@ -166,4 +166,13 @@
       }
     }
   }
+
+  & .footer {
+    & .action {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 1.6rem;
+    }
+  }
 }

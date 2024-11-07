@@ -9,6 +9,7 @@ import styles from "./StaffRegistration.module.scss";
 import IconCheckmark from "../components/vectors/IconCheckmark";
 import Button from "./Button";
 import addUser from "../apis/addUser";
+import LoaderSpinner from "./LoaderSpinner";
 
 const cx = classNames.bind(styles);
 
@@ -234,9 +235,12 @@ function StaffRegistration() {
         </div>
 
         <footer className={cx("footer")}>
-          <Button className={"small small-padding primary"}>
-            Add new staff
-          </Button>
+          <div className={cx("action")}>
+            <Button className={"small small-padding primary"}>
+              Add new staff
+            </Button>
+            <LoaderSpinner state={status} />
+          </div>
 
           <section className={cx("message")}>
             <div className={cx("errors")}>{errorMessages}</div>

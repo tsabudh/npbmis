@@ -1,0 +1,16 @@
+@use "/src/scss/abstract/variables" as vars;
+@use "/src/scss/abstract/mixins" as mixins;
+
+.projects-overview {
+  padding: 1rem;
+  & .header {
+    margin-bottom: 1.6rem;
+    & .h2 {
+      color: vars.$c-blue-gray-900;
+    }
+  }
+
+  & .container {
+    color: vars.$c-blue-gray-700;
+  }
+}

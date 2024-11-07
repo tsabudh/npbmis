@@ -14,20 +14,30 @@ import LocaleContext from "../context/LocaleContext";
 import { useTranslation } from "react-i18next";
 import Dropdown from "./Dropdown";
 import LinkItem from "./LinkItem";
+import { deleteJwtFromLocalStorage } from "../utils/localStorageUtils";
+import AuthContext from "../context/AuthContext";
 
 const cx = classnames.bind(styles);
 
-function NavbarDash() {
+function NavbarDash({ toggleSidebar }) {
   const navigate = useNavigate();
   const { t } = useTranslation("navBar");
 
   const [isOpen, setIsOpen] = useState(false);
   const userRef = useRef(null);
   const { locale } = useContext(LocaleContext);
+  const { setJwtToken } = useContext(AuthContext);
 
   const todayNepali = new NepaliDate(); // Get today's Nepali date
   const dateFormat = locale === "ne" ? "yyyy-mm-dd" : "YYYY-MM-DD";
   const formattedNepaliDate = todayNepali.format(dateFormat);
+
+  const handleLogout = () => {
+    console.log("hi");
+    setJwtToken(null);
+    deleteJwtFromLocalStorage();
+    navigate("/login");
+  };
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -51,6 +61,14 @@ function NavbarDash() {
       </div>
       <div className={cx("lang")}>
         <LanguagePicker />
+      </div>
+      <div className="">
+        <Button
+          onClick={toggleSidebar}
+          className={"primary small-padding small-font rounded"}
+        >
+          Sidebar
+        </Button>
       </div>
       <nav className={cx("navbar_menu")}>
         <ul>
@@ -80,11 +98,13 @@ function NavbarDash() {
                     </LinkItem>
                   </li>
                   <li className={cx("list-item")}>
-                    <LinkItem className={"rounded"} to="/logout">
-                      <div className={cx("nowrap")}>
-                        <span>Logout</span> <IoLogOutOutline />
-                      </div>
-                    </LinkItem>
+                    <div onClick={handleLogout}>
+                      <LinkItem className={"rounded"} to="#">
+                        <div className={cx("nowrap")}>
+                          <span>Logout</span> <IoLogOutOutline />
+                        </div>
+                      </LinkItem>
+                    </div>
                   </li>
                 </ul>
               </div>

@@ -70,7 +70,7 @@ function StaffsOverview() {
     mutationFn: ({ payload, jwtToken }) => {
       setModalSuccessMessage("");
       setModalErrorMessage("");
-      resetPassword(payload, jwtToken);
+      return resetPassword(payload, jwtToken);
     },
     onSuccess: (data) => {
       console.log("Password reset successfully");

@@ -14,6 +14,8 @@ import {
   setUserToLocalStorage,
 } from "../utils/localStorageUtils";
 import { useTranslation } from "react-i18next";
+import { useMutation } from "@tanstack/react-query";
+import LoaderSpinner from "./LoaderSpinner";
 
 const cx = classNames.bind(styles);
 
@@ -54,55 +56,52 @@ const LoginForm = () => {
     asyncWrapper();
   }, []);
 
-  async function handleSubmit(e) {
+  const handleLogin = (e) => {
     e.preventDefault();
     setErrorMessage(null);
-    let form = loginFormRef.current;
-    let loginDetails = {};
-    let formData = new FormData(form);
-    formData.forEach((value, key) => (loginDetails[key] = value));
 
-    setIsLoading(true);
-    loginDetails.username = loginDetails.username.toLocaleLowerCase();
-
-    let response = await loginUser(loginDetails);
-    if (response) setIsLoading(false);
-
-    if (response.status == "success") {
-      setIsLoading(false);
-      setJwtToken(response.token);
-      setUser(response.user);
-      setJwtToLocalStorage(response.token);
-      setUserToLocalStorage(response.user);
-
-      navigate("/dashboard");
-    } else if (response.status == "failure") {
-      if (response.message) {
-        setErrorMessage(response.message);
-      } else if (response.errors) {
-        setErrorMessage(response.errors[0].msg);
-      }
-    } else {
-      setErrorMessage("Something went wrong on our side.😞");
+    if (!username || !password) {
+      setErrorMessage("Please enter username and password");
+      return;
     }
+    loginUserFn({ payload: { username, password } });
+  };
 
-    return;
-  }
+  const {
+    mutate: loginUserFn,
+    status,
+    error,
+    data,
+  } = useMutation({
+    mutationFn: ({ payload }) => loginUser(payload),
+    onSuccess: (data) => {
+      setJwtToken(data.token);
+      setUser(data.user);
+      setJwtToLocalStorage(data.token);
+      setUserToLocalStorage(data.user);
+      navigate("/dashboard");
+    },
+    onError: (error) => {
+      if (error.data.message) setErrorMessage(error.data.message);
+      else setErrorMessage(error.message);
+      console.error("Error logging in:", error);
+    },
+  });
 
   return (
     <div className={cx("login-container")}>
-      <div className={`${styles["form-container"]}`}>
+      <div className={cx("form-container")}>
         <form id="loginForm" className={cx("form")} ref={loginFormRef}>
           <div className={cx("header")}>
             <div className={cx("active")}>{t("login")}</div>
           </div>
 
-          <div className={styles["input-group"]}>
-            <label htmlFor="username" className={styles["input-label"]}>
+          <div className={cx("input-group")}>
+            <label htmlFor="username" className={cx("input-label")}>
               {t("username")}
             </label>
             <input
-              className={styles["input-field"]}
+              className={cx("input-field")}
               id="username"
               name="username"
               type="text"
@@ -110,12 +109,12 @@ const LoginForm = () => {
               onChange={(e) => setUsername(e.target.value)}
             />
           </div>
-          <div className={styles["input-group"]}>
-            <label htmlFor="password" className={styles["input-label"]}>
+          <div className={cx("input-group")}>
+            <label htmlFor="password" className={cx("input-label")}>
               {t("password")}
             </label>
             <input
-              className={styles["input-field"]}
+              className={cx("input-field")}
               id="password"
               name="password"
               type={passwordShown ? "text" : "password"}
@@ -123,25 +122,27 @@ const LoginForm = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <span
-              className={styles["show-password"]}
+              className={cx("show-password")}
               onClick={() => setPasswordShown(!passwordShown)}
             >
               {passwordShown ? <BsEyeFill /> : <BsEyeSlashFill />}
             </span>
           </div>
         </form>
-        <div className={styles["action"]}>
+        <div className={cx("action")}>
           <Button
             className="primary rounded"
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
+            onClick={handleLogin}
             form="loginForm"
           >
             {t("login")}
           </Button>
-          {isLoading && "Loading..."}
+          {isLoading && " Logging in ..."}
+          <LoaderSpinner state={status} />
         </div>
         {errorMessage && (
-          <div className={styles["error-message"]}>{errorMessage}</div>
+          <div className={cx("error-message")}>{errorMessage}</div>
         )}
       </div>
     </div>

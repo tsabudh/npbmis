@@ -65,6 +65,10 @@ $check-color: $brand-success;
       position: absolute;
     }
   }
+
+  &.hide-after {
+    display: none;
+  }
 }
 .load-failure {
   &:before,

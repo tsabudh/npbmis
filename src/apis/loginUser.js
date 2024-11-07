@@ -1,36 +1,32 @@
 import API_ROUTE from "../assets/baseRoute";
-export async function loginUser(loginDetails) {
-    return new Promise( (resolve, reject) => {
-        try {
-            let xhttp = new XMLHttpRequest();
-            let apiRoute = `${API_ROUTE}/auth/login`;
-
-            xhttp.onreadystatechange = () => {
-                if (xhttp.readyState == 4) {
-                    if (xhttp.responseText) {
-                        let response = JSON.parse(xhttp.responseText);
-                        resolve(response);
-                    } else {
-                        console.error('No response from the server.');
-                        resolve({
-                            status: 'failure',
-                            message:
-                                'No response from the server. net::ERR_CONNECTION_REFUSED',
-                        });
-                    }
-                }
-            };
-
-            xhttp.open('POST', apiRoute);
-            xhttp.setRequestHeader('Content-Type', 'application/json');
-
-            let requestBody = JSON.stringify(loginDetails);
-            xhttp.send(requestBody);
-        } catch (error) {
-            console.log(error.message);
-            reject('Something went wrong.');
-        }
+async function loginUser(payload) {
+  try {
+    const response = await fetch(`${API_ROUTE}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
     });
+
+    // Check if response is OK (status in the 200–299 range)
+    if (!response.ok) {
+      const errorData = await response.json();
+      const error = new Error("Failed to login");
+
+      if (errorData.message) error.message = errorData.message;
+      
+      error.status = response.status;
+      error.data = errorData;
+      throw error;
+    }
+
+    // If the response is OK, parse and return the JSON data
+    return await response.json();
+  } catch (error) {
+    console.error("Error logging in:", error);
+    throw error;
+  }
 }
 
 export default loginUser;

@@ -5,6 +5,19 @@ import styles from "./ProjectCardSimple.module.scss";
 const cx = classnames.bind(styles);
 
 function ProjectCardSimple({ name, nepaliName, status, description, sector }) {
+  const displayStatus =
+    status === "NEW_OR_UPCOMING"
+      ? "New/Upcoming"
+      : status === "ONGOING"
+      ? "Ongoing"
+      : "Unknown";
+  const displaySector =
+    sector === "SOCIAL_OR_SERVICE"
+      ? "Social/Service"
+      : sector === "INFRASTRUCTURE"
+      ? "Infrastructure"
+      : "Unknown";
+
   return (
     <div className={cx("project-card-simple")}>
       <header className={cx("header")}>
@@ -14,12 +27,12 @@ function ProjectCardSimple({ name, nepaliName, status, description, sector }) {
       </header>
       <main className={cx("main")}>
         <p>
-          <span className="field">Status: </span>
-          <span className="value">{status}</span>
+          <span className={cx("field")}>Status: </span>
+          <span className={cx("value")}>{displayStatus}</span>
         </p>
         <p>
-          <span className="field">Sector: </span>
-          <span className="value">{sector}</span>
+          <span className={cx("field")}>Sector: </span>
+          <span className={cx("value")}>{displaySector}</span>
         </p>
       </main>
     </div>

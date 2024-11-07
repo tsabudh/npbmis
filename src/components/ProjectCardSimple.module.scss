@@ -5,9 +5,9 @@
   background-color: vars.$c-blue-fair-100;
   padding: 1rem;
   border-radius: 0.5rem;
-  
 
   & .header {
+    margin-bottom: 1.6rem;
     & .h3 {
       color: vars.$c-blue-gray-900;
     }
@@ -15,5 +15,10 @@
 
   & .main {
     color: vars.$c-blue-gray-700;
+    & .field {
+    }
+
+    & .value {
+    }
   }
 }

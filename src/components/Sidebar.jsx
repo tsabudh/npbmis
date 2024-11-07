@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import classNames from "classnames/bind";
 import * as Icons from "react-icons/lu";
 
@@ -13,14 +13,24 @@ import LocaleContext from "../context/LocaleContext";
 
 const cx = classNames.bind(styles);
 
-function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
+function Sidebar({
+  sidebarIsOpen,
+  setSidebarIsOpen,
+  sidebarStatus,
+  setSidebarStatus,
+  toggleSidebar,
+}) {
   const [expanded, setExpanded] = useState(null);
   const { userRole } = useContext(AuthContext);
   const { locale } = useContext(LocaleContext);
 
-  const handleToggle = () => {
-    setSidebarIsOpen((prev) => !prev);
+  const handleToggle = (newStatus) => {
+    toggleSidebar(newStatus);
   };
+
+  useEffect(() => {
+    console.log("sidebarStatus", sidebarStatus);
+  });
 
   const handleExpand = (id) => {
     if (id === expanded) {
@@ -33,12 +43,13 @@ function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
   return (
     <div
       className={cx("sidebar", {
-        "sidebar--opened": sidebarIsOpen,
-        "sidebar--closed": !sidebarIsOpen,
+        "sidebar--opened": sidebarStatus === "opened",
+        "sidebar--closed": sidebarStatus === "closed",
+        "sidebar--minimized": sidebarStatus === "minimized",
       })}
     >
-      <div className={cx("header")}>
-        <div className={cx("hamburger")} onClick={handleToggle}>
+      <div className={cx("header", sidebarStatus)}>
+        <div className={cx("hamburger")} onClick={() => handleToggle()}>
           <IoMenuSharp />
         </div>
         {/* <figure className={cx("logo")}>
@@ -60,6 +71,7 @@ function Sidebar({ sidebarIsOpen, setSidebarIsOpen }) {
             expanded={expanded}
             locale={locale}
             IconComponent={IconComponent}
+            minimized={sidebarStatus === "minimized"}
           />
         );
       })}

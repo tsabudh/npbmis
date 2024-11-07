@@ -19,7 +19,7 @@
 
   background: vars.$c-gray-200;
 
-  transition: width 0.5s ease, transform 0.5s ease;
+  transition: width 0.5s ease, transform 0.5s ease, flex-basis 0.5s ease;
 
   @include mixins.respond(tab-port) {
     // position: absolute;
@@ -31,19 +31,31 @@
   }
   &--closed {
     width: 0rem;
+    flex-basis: 0;
+  }
+  &--minimized {
+    width: 5rem;
+    flex-basis: 5rem;
   }
 
   & .header {
     border-bottom: 0.5px solid vars.$c-gray-100;
     min-height: 3rem;
-  }
-  .hamburger {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.3rem;
-    color: vars.$c-blue-fair-300;
-    font-size: 2.5rem;
-    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+
+    &.minimized {
+      padding-right: 0;
+      justify-content: center;
+    }
+    .hamburger {
+      color: vars.$c-blue-fair-300;
+      font-size: 2.5rem;
+      cursor: pointer;
+    }
   }
 
   & .logo {

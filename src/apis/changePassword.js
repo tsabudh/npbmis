@@ -11,18 +11,19 @@ async function changePassword(payload, jwtToken) {
       body: JSON.stringify(payload),
     });
 
-    // Handle the response
+    // Check if response is OK (status in the 200–299 range)
     if (!response.ok) {
-      console.log("response is not okay");
-      const errorData = await response.json(); // Parse the error JSON response
-
-      throw new Error(errorData?.message || `Error: ${response.status}`);
-    } else {
-      const result = await response.json(); // Parse the JSON response
-      return result;
+      const errorData = await response.json();
+      const error = new Error("Failed to login");
+      error.status = response.status;
+      error.data = errorData;
+      throw error;
     }
+
+    // If the response is OK, parse and return the JSON data
+    return await response.json();
   } catch (error) {
-    console.error("Error changing password:", error.message);
+    console.error("Error changing password:", error);
     throw error;
   }
 }
