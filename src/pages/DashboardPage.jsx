@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import NavbarDash from "../components/NavbarDash";
-import Sidebar from "../components/SideBar";
+import Sidebar from "../components/Sidebar";
 
 import classNames from "classnames/bind";
 import styles from "./DashboardPage.module.scss";
