@@ -62,14 +62,7 @@ function NavbarDash({ toggleSidebar }) {
       <div className={cx("lang")}>
         <LanguagePicker />
       </div>
-      <div className="">
-        <Button
-          onClick={toggleSidebar}
-          className={"primary small-padding small-font rounded"}
-        >
-          Sidebar
-        </Button>
-      </div>
+      
       <nav className={cx("navbar_menu")}>
         <ul>
           <li>
