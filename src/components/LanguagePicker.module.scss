@@ -1,6 +1,3 @@
-@use "/src/scss/abstract/variables" as vars;
-@use "/src/scss/abstract/mixins" as mixins;
-
 .language-picker {
   display: block;
 
@@ -10,10 +7,10 @@
     & .language-picker-select {
       padding: 0.5rem;
       padding-right: 2rem;
-      border: 1px solid vars.$c-gray-200;
+      border: 1px solid gray;
       border-radius: 5rem;
       font-size: 1rem;
-      background-color: vars.$c-gray-50;
+      background-color: gray;
       color: #333;
       cursor: pointer;
       appearance: none;

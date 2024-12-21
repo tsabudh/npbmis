@@ -1,54 +1,16 @@
 [
   {
-    "title": "overview",
-    "nepali-title": "अवलोकन",
-    "icon": "LuAreaChart",
+    "name": "overview",
+    "nepali-name": "अवलोकन",
+    "icon": "dashboard",
     "identity": "menu",
-    "path": "/dashboard"
+    "to": "/dashboard"
   },
   {
-    "title": "office",
-    "nepali-title": "कार्यालय",
-    "icon": "LuBuilding2",
+    "name": "projects",
+    "nepali-name": "परियोजनाहरू",
+    "icon": "tactic",
     "identity": "menu",
-    "path": "/dashboard/office",
-    "children": [
-      {
-        "title": "overview",
-        "nepali-title": "अवलोकन",
-        "icon": "LuFileBadge",
-        "path": "/dashboard/office",
-        "identity": "sub-menu"
-      },
-      {
-        "title": "staffs",
-        "nepali-title": "कर्मचारीहरू",
-        "icon": "LuUserCog",
-        "path": "/dashboard/office/staffs",
-        "identity": "sub-menu"
-      }
-    ]
-  },
-  {
-    "title": "projects",
-    "nepali-title": "परियोजनाहरू",
-    "icon": "LuFolderKanban",
-    "identity": "menu",
-    "children": [
-      {
-        "title": "overview",
-        "nepali-title": "अवलोकन",
-        "icon": "LuBarChart3",
-        "path": "/dashboard/projects",
-        "identity": "sub-menu"
-      },
-      {
-        "title": "add",
-        "nepali-title": "थप्नुहोस्",
-        "icon": "LuFolderPlus",
-        "path": "/dashboard/projects/add",
-        "identity": "sub-menu"
-      }
-    ]
+    "to": "/dashboard/projects"
   }
 ]

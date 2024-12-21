@@ -1,23 +1,32 @@
-import { useContext, useState } from "react";
-import styles from "./App.module.scss";
+import { useState } from "react";
+import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
+
 import LocaleContext from "./context/LocaleContext";
 
-import { Outlet, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import LoginPage from "./pages/LoginPage";
 import "./config/i18n";
-import PageStruct from "./pages/PageStruct";
-import DashboardPage from "./pages/DashboardPage";
-import ProjectRegistration from "./components/ProjectRegistration";
 import AuthContext from "./context/AuthContext";
 import { getUserFromLocalStorage } from "./utils/localStorageUtils";
-import ProjectsOverview from "./components/ProjectsOverview";
 import LandingSection from "./components/LandingSection";
-import StaffsOverview from "./components/StaffsOverview";
-import i18n from "./config/i18n";
-import UserSettings from "./components/UserSettings";
-import StaffRegistration from "./components/StaffRegistration";
+import LayoutPage from "./pages/LayoutPage";
+import Board from "./components/Board";
+import { ToastContainer } from "react-toastify";
+import ProjectOverviewTab from "./components/ProjectOverviewTab";
+import ProjectRequests from "./components/ProjectRequests";
+import ProjectRequestDetail from "./components/ProjectRequestDetail";
+import Account from "./components/Account";
+import ProjectEdit from "./components/ProjectEditTab";
+import ProjectRegisterTab from "./components/ProjectRegisterTab";
+import ProjectEditTab from "./components/ProjectEditTab";
+import ProjectEditDetails from "./components/ProjectEditDetails";
+import ProjectDrafts from "./components/ProjectDrafts";
+import Project from "./components/Project";
+import ProjectDetails from "./components/ProjectDetails";
+import OverviewPage from "./components/OverviewPage";
 
 function App() {
   const [locale, setLocale] = useState("en");
@@ -25,7 +34,6 @@ function App() {
   const [user, setUser] = useState(getUserFromLocalStorage());
   const queryClient = new QueryClient();
 
-  // i18n.changeLanguage(locale);
   return (
     <AuthContext.Provider
       value={{
@@ -37,27 +45,30 @@ function App() {
     >
       <QueryClientProvider client={queryClient}>
         <LocaleContext.Provider value={{ locale, setLocale }}>
+          <ToastContainer />
           <Routes>
-            <Route element={<PageStruct />}>
-              <Route index element={<LandingSection />} />
-              <Route path="/login" element={<LoginPage />} />
-            </Route>
-            <Route path="/dashboard" element={<DashboardPage />}>
-              <Route path="projects">
-                <Route index element={<ProjectsOverview />} />
-                <Route path="add" element={<ProjectRegistration />} />
-              </Route>
-              <Route path="users">
-                <Route index element={<StaffsOverview />} />
-              </Route>
-              <Route path="office" element={<Outlet />}>
-                <Route path="staffs">
-                  <Route index element={<StaffsOverview />} />
-                  <Route path="add" element={<StaffRegistration />} />
+            <Route index element={<LandingSection />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/dashboard" element={<LayoutPage />}>
+              <Route index element={<OverviewPage/>} />
+              <Route path="account" element={<Account />} />
+              <Route path="notifications" element={<div>notifications</div>} />
+              <Route path="projects" element={<Board />}>
+                <Route index element={<ProjectOverviewTab />} />
+                <Route path="one" element={<ProjectDetails />}>
+                  <Route path=":projectId" element={<ProjectDetails />} />
                 </Route>
-              </Route>
-              <Route path="settings" element={<Outlet />}>
-                <Route index element={<UserSettings />} />
+                <Route path="register" element={<ProjectRegisterTab />} />
+                <Route path="edit" element={<ProjectEditTab />}>
+                  <Route path=":projectId" element={<ProjectEditDetails />} />
+                </Route>
+                <Route path="drafts" element={<ProjectDrafts />}>
+                  <Route path=":projectId" element={<ProjectEditDetails />} />
+                </Route>
+                <Route path="requests" element={<ProjectRequests />}>
+                  <Route path=":projectId" element={<ProjectRequestDetail />} />
+                </Route>
+                <Route path="*" element={<div>Not found</div>} />
               </Route>
             </Route>
           </Routes>

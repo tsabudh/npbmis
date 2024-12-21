@@ -1,25 +1,25 @@
-import i18n from 'i18next';
-import { initReactI18next } from 'react-i18next';
-import Backend from 'i18next-http-backend'; // To load translation files
-import LanguageDetector from 'i18next-browser-languagedetector'; // To detect user's language
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import Backend from "i18next-http-backend"; // To load translation files
+import LanguageDetector from "i18next-browser-languagedetector"; // To detect user's language
 
 i18n
-  .use(Backend) // Load translations from files
-  .use(LanguageDetector) // Detect language (e.g., from browser or URL)
-  .use(initReactI18next) // Passes i18n instance to react-i18next
+  .use(Backend)
+  .use(LanguageDetector)
+  .use(initReactI18next)
   .init({
-    fallbackLng: 'en', // Fallback language if translation is missing
-    ns: ['login'], // Define the namespaces you will use
-    defaultNS: 'common', // Default namespace
+    fallbackLng: "en",
+    ns: ["login"],
+    defaultNS: "common",
     backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json', // Path where your translation JSON files are stored
+      loadPath: "/locales/{{lng}}/{{ns}}.json",
     },
     interpolation: {
-      escapeValue: false, // React already escapes by default
+      escapeValue: false,
     },
     detection: {
-      order: ['querystring', 'cookie', 'localStorage', 'navigator', 'htmlTag'],
-      caches: ['localStorage', 'cookie'], // Cache user language in these
+      order: ["querystring", "cookie", "localStorage", "navigator", "htmlTag"],
+      caches: ["localStorage", "cookie"], // Cache user language in these
     },
   });
 
