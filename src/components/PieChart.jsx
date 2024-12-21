@@ -33,7 +33,7 @@ const PieChart = ({ data }) => {
     responsive: true,
     plugins: {
       legend: {
-        position: "top",
+        position: "bottom",
       },
       tooltip: {
         callbacks: {
@@ -48,7 +48,7 @@ const PieChart = ({ data }) => {
   };
 
   return (
-    <div style={{ width: "50%", margin: "auto" }}>
+    <div style={{ width: "400px", margin: "auto" }}>
       <h2>Project Summary</h2>
       <Pie data={chartData} options={options} />
     </div>
