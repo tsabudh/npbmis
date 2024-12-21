@@ -1,26 +1,41 @@
-import API_ROUTE from "../assets/baseRoute";
+import axiosInstance from "./axiosInstance";
 
-async function addProjects(projectData, jwtToken) {
+/**
+ * Adds a new project with the given data.
+ * @param {Object} params - The parameters for the function.
+ * @param {Object} params.projectData - The project data to be submitted.
+ * @param {string} params.jwtToken - The JWT token for authorization.
+ * @returns {Promise<Object>} The response data from the server.
+ * @throws Will throw an error if the request fails.
+ */
+export const addProjects = async ({ projectData, jwtToken }) => {
   try {
-    // Send POST request with the project data
-    const response = await fetch(`${API_ROUTE}/projects`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwtToken}`,
-      },
-      body: JSON.stringify(projectData), // Convert projectData object to JSON
-    });
-
-    // Handle the response
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
+    if (!jwtToken) {
+      throw new Error("jwtToken is required");
     }
 
-    const result = await response.json(); // Parse the JSON response
-    return result;
+    // Include projectData in the request body
+    const response = await axiosInstance.post(
+      "/projects",
+      projectData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      }
+    );
+
+    if (response.status !== 200) {
+      throw new Error(`Error adding project: ${response.status}`);
+    }
+
+    return response.data;
   } catch (error) {
-    console.error("Error submitting project:", error.message);
+    console.error(
+      "Error during addProjects:",
+      error.response?.data || error.message
+    );
+    throw error; // Optionally rethrow the error if you want to handle it elsewhere
   }
-}
-export default addProjects;
+};

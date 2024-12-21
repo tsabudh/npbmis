@@ -1,24 +1,36 @@
-import API_ROUTE from "../assets/baseRoute";
+import axiosInstance from "./axiosInstance";
 
-async function getAllUsers(jwtToken) {
+/**
+ * Retrieves all users.
+ * @param {Object} params - The parameters for the function.
+ * @param {string} params.jwtToken - The JWT token for authorization.
+ * @returns {Promise<Object>} The response data containing all users.
+ * @throws Will throw an error if the request fails.
+ */
+export const getAllUsers = async ({ jwtToken }) => {
   try {
-    const response = await fetch(`${API_ROUTE}/users`, {
-      method: "GET",
+    if (!jwtToken) {
+      throw new Error("jwtToken is required");
+    }
+
+    // Send GET request to retrieve all users
+    const response = await axiosInstance.get("/users", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwtToken}`,
       },
     });
 
-    // Handle the response
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
+    if (response.status !== 200) {
+      throw new Error(`Error retrieving users: ${response.status}`);
     }
 
-    const result = await response.json();
-    return result;
+    return response.data;
   } catch (error) {
-    console.error("Error submitting user:", error.message);
+    console.error(
+      "Error during getAllUsers:",
+      error.response?.data || error.message
+    );
+    throw error; // Optionally rethrow the error if you want to handle it elsewhere
   }
-}
-export default getAllUsers;
+};

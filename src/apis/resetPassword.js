@@ -1,32 +1,47 @@
-import API_ROUTE from "../assets/baseRoute";
+import axiosInstance from "./axiosInstance";
 
-async function resetPassword(payload, jwtToken) {
-  // Eg: {userId: 22} is required payload
+/**
+ * Resets the user's password.
+ * @param {Object} params - The parameters for the function.
+ * @param {Object} params.payload - The payload containing the user ID.
+ * @param {string} params.jwtToken - The JWT token for authorization.
+ * @returns {Promise<Object>} The response data from the server.
+ * @throws Will throw an error if the password reset fails.
+ */
+export const resetPassword = async ({ payload, jwtToken }) => {
   try {
-    const response = await fetch(`${API_ROUTE}/admin/resetpassword`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwtToken}`,
-      },
-      body: JSON.stringify(payload),
-    });
+    if (!jwtToken) {
+      throw new Error("jwtToken is required");
+    }
 
-    // Check if response is OK (status in the 200–299 range)
-    if (!response.ok) {
-      const errorData = await response.json();
-      const error = new Error("Failed to login");
-      if (errorData.message) error.message = errorData.message;
+    // Send POST request with payload
+    const response = await axiosInstance.post(
+      "/admin/resetpassword",
+      payload,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      }
+    );
+
+    if (response.status !== 200) {
+      const error = new Error("Failed to reset password");
+      if (response.data?.message) error.message = response.data.message;
       error.status = response.status;
-      error.data = errorData;
+      error.data = response.data;
       throw error;
     }
 
-    // If the response is OK, parse and return the JSON data
-    return await response.json();
+    return response.data;
   } catch (error) {
-    console.error("Error logging in:", error);
+    console.error(
+      "Error during resetPassword:",
+      error.response?.data || error.message
+    );
     throw error;
   }
-}
+};
+
 export default resetPassword;

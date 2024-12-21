@@ -1,32 +1,40 @@
-import API_ROUTE from "../assets/baseRoute";
+import axiosInstance from "./axiosInstance";
 
-async function addUser(userData, jwtToken) {
+/**
+ * Adds a new user with the provided user data.
+ * @param {Object} params - The parameters for the function.
+ * @param {Object} params.userData - The data of the user to be added.
+ * @param {string} params.jwtToken - The JWT token for authorization.
+ * @returns {Promise<Object>} The response data from the server.
+ * @throws Will throw an error if the request fails.
+ */
+export const addUser = async ({ userData, jwtToken }) => {
   try {
-    // Send POST request with the project data
-    const response = await fetch(`${API_ROUTE}/users`, {
-      method: "POST",
+    if (!jwtToken) {
+      throw new Error("jwtToken is required");
+    }
+
+    // Send POST request with user data
+    const response = await axiosInstance.post("/users", userData, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwtToken}`,
       },
-      body: JSON.stringify(userData),
     });
 
-    // Check if response is OK (status in the 200–299 range)
-    if (!response.ok) {
-      const errorData = await response.json();
-      const error = new Error("Failed to login");
+    if (response.status !== 200) {
+      const error = new Error("Failed to add user");
       error.status = response.status;
-      error.data = errorData;
+      error.data = response.data;
       throw error;
-    } 
+    }
 
-    // If the response is OK, parse and return the JSON data
-    return  await response.json();
-
+    return response.data;
   } catch (error) {
-    console.error("Error adding user:", error.message);
-    throw error;
+    console.error(
+      "Error during addUser:",
+      error.response?.data || error.message
+    );
+    throw error; // Optionally rethrow the error if you want to handle it elsewhere
   }
-}
-export default addUser;
+};

@@ -1,24 +1,36 @@
-import API_ROUTE from "../assets/baseRoute";
+import axiosInstance from "./axiosInstance";
 
-async function fetchUserDetails(jwtToken) {
+/**
+ * Fetches user details for the currently logged-in user.
+ * @param {Object} params - The parameters for the function.
+ * @param {string} params.jwtToken - The JWT token for authorization.
+ * @returns {Promise<Object>} The response data containing user details.
+ * @throws Will throw an error if the request fails.
+ */
+export const fetchUserDetails = async ({ jwtToken }) => {
   try {
-    const response = await fetch(`${API_ROUTE}/users/me`, {
-      method: "GET",
+    if (!jwtToken) {
+      throw new Error("jwtToken is required");
+    }
+
+    // Send GET request to fetch user details
+    const response = await axiosInstance.get("/users/me", {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwtToken}`,
       },
     });
 
-    // Handle the response
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
+    if (response.status !== 200) {
+      throw new Error(`Error fetching user details: ${response.status}`);
     }
 
-    const result = await response.json();
-    return result.data;
+    return response.data.data;
   } catch (error) {
-    console.error("Error submitting user:", error.message);
+    console.error(
+      "Error during fetchUserDetails:",
+      error.response?.data || error.message
+    );
+    throw error; // Optionally rethrow the error if you want to handle it elsewhere
   }
-}
-export default fetchUserDetails;
+};
