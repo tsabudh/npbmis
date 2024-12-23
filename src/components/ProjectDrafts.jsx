@@ -38,7 +38,7 @@ function ProjectDrafts() {
 
   // Loading state
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-gray-600">Loading...</div>;
   }
 
   // Error state

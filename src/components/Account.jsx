@@ -12,7 +12,7 @@ function Account() {
   const [user, setUser] = useRecoilState(userState);
   const { data, error, isLoading, isError } = useQuery({
     queryKey: ["userDetails", jwtToken],
-    queryFn: () => fetchUserDetails(jwtToken),
+    queryFn: () => fetchUserDetails({ jwtToken }),
     onSuccess: (data) => {
       setUser(data); //TODO - Check if this is necessary
     },
@@ -29,7 +29,7 @@ function Account() {
   }
 
   return (
-    <div className="w-full mx-auto bg-white rounded-lg shadow-md border-s-[1px]">
+    <div className="w-full mx-auto bg-white rounded-lg shadow-md border-s-[1px] overflow-auto h-full">
       <header className="sticky top-0 p-3 bg-white border-b-[1px] flex justify-between">
         <h2 className="m3-title-medium text-2xl font-semibold mb-6">
           Account Details

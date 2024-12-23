@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames/bind";
 import styles from "./LandingSection.module.scss";
 import Button from "./material3/Button";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { fetchProjectSummary } from "../apis/fetchProjectSummary";
 
@@ -19,13 +19,13 @@ function LandingSection() {
   });
 
   return (
-    <section className={"landing-section bg-blue-fair-50 p-3 min-h-dvh"}>
-      <header className={"header py-4"}>
+    <section className={"landing-section bg-blue-fair-50  min-h-dvh"}>
+      <header className={"header py-4 px-3"}>
         <h2 className="m3-title-large">
           PROJECT BANK INFORMATION MANAGEMENT SYSTEM
         </h2>
       </header>
-      <main className={"main flex items-center justify-between gap-6"}>
+      <main className={"main flex items-center justify-between gap-6 px-3"}>
         <section className=" flex flex-col gap-3 ">
           <p className="text-xl text-gray-700">
             Data inventory for government funded projects
@@ -71,9 +71,19 @@ function LandingSection() {
           </div>
         </section>
       </main>
-      <footer className={"activities py-10"}>
-        <Button className={"gray"} onClick={() => navigate("/login")}>
-          Log into system
+      <footer className={"activities hidden py-10 px-3"}>
+        <Button
+          className={"gray"}
+          variant="filled"
+          style={{
+            "--md-filled-button-container-color": "var(--blue-fair-500)",
+          }}
+          onClick={() => navigate("/login")}
+        >
+          <div className="flex items-center gap-2">
+            Log into system
+            <span className="material-symbols-outlined">add</span>
+          </div>
         </Button>
       </footer>
     </section>

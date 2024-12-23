@@ -50,7 +50,7 @@ function LayoutPage() {
   const closeMobileNav = () => setMobileNavOpen(false);
 
   return (
-    <div className="flex h-full">
+    <div className="flex h-dvh">
       {/* Overlay */}
       {isOnMobile && mobileNavOpen && (
         <div

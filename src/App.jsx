@@ -27,6 +27,7 @@ import ProjectDrafts from "./components/ProjectDrafts";
 import Project from "./components/Project";
 import ProjectDetails from "./components/ProjectDetails";
 import OverviewPage from "./components/OverviewPage";
+import PublicLayoutPage from "./components/PublicLayoutPage";
 
 function App() {
   const [locale, setLocale] = useState("en");
@@ -47,10 +48,12 @@ function App() {
         <LocaleContext.Provider value={{ locale, setLocale }}>
           <ToastContainer />
           <Routes>
-            <Route index element={<LandingSection />} />
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="" element={<PublicLayoutPage />}>
+              <Route index element={<LandingSection />} />
+              <Route path="/login" element={<LoginPage />} />
+            </Route>
             <Route path="/dashboard" element={<LayoutPage />}>
-              <Route index element={<OverviewPage/>} />
+              <Route index element={<OverviewPage />} />
               <Route path="account" element={<Account />} />
               <Route path="notifications" element={<div>notifications</div>} />
               <Route path="projects" element={<Board />}>

@@ -9,13 +9,14 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Project from "./Project";
 import ProjectRequestDetail from "./ProjectRequestDetail";
 import ProjectEditDetails from "./ProjectEditDetails";
+import Loader from "./Loader";
 
 function ProjectEditTab() {
   const jwtToken = useRecoilValue(jwtTokenState);
 
   const navigate = useNavigate();
   const { projectId } = useParams();
-  
+
   const {
     data: projects,
     error,
@@ -34,7 +35,7 @@ function ProjectEditTab() {
 
   // Loading state
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-gray-600">Loading...</div>;
   }
 
   // Error state

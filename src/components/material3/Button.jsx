@@ -1,7 +1,7 @@
 import React, { CSSProperties, forwardRef } from "react";
 
 const Button = forwardRef((props, ref) => {
-  const { variant = "outlined", className, style, ...rest } = props;
+  const { variant = "outlined", className, style, children, ...rest } = props;
 
   const inputMap = {
     outlined: "md-outlined-button",
@@ -14,12 +14,9 @@ const Button = forwardRef((props, ref) => {
   const CustomInput = inputMap[variant] || "md-outlined-button"; // Fallback if `variant` is invalid
 
   return (
-    <CustomInput
-      ref={ref}
-      class={className}
-      style={style}
-      {...rest}
-    ></CustomInput>
+    <CustomInput ref={ref} class={className} style={style} {...rest}>
+      {children ? children : null}
+    </CustomInput>
   );
 });
 

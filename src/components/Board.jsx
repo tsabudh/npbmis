@@ -51,9 +51,8 @@ function Board() {
     }
   }, [data]);
 
-  console.log(data, "jwtTOken from BOARD");
   return (
-    <div className="flex w-full  md:flex-col border-s-[1px]">
+    <div className="_board flex w-full  md:flex-col border-s-[1px]">
       {/* Main Content */}
       <div className="flex-grow w-full">
         <header className=" border-b sticky top-0 bg-white">
@@ -73,7 +72,7 @@ function Board() {
                 return (
                   <NavLink
                     key={tab.to}
-                    className="h-[48px] px-4 flex items-center text-nowrap"
+                    className="h-[48px] px-4 flex items-center text-nowrap hover:text-primary"
                     to={`.${tab.to}`}
                     end={tab.to === "/"}
                   >
@@ -99,7 +98,7 @@ function Board() {
             </div>
           </div>
         </header>
-        <main className="">
+        <main className="overflow-y-auto h-full">
           <Outlet />
         </main>
       </div>

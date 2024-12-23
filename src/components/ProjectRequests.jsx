@@ -16,7 +16,7 @@ function ProjectRequests() {
   const { projectId } = useParams();
   const { data, error, isLoading, isError } = useQuery({
     queryKey: ["assignedProjects", jwtToken],
-  queryFn: () => fetchAssignedProjects(jwtToken),
+    queryFn: () => fetchAssignedProjects(jwtToken),
   });
 
   const projects = data?.filter(
@@ -31,7 +31,7 @@ function ProjectRequests() {
 
   // Loading state
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-gray-600">Loading...</div>;
   }
 
   // Error state

@@ -34,3 +34,4 @@ export const fetchUserDetails = async ({ jwtToken }) => {
     throw error; // Optionally rethrow the error if you want to handle it elsewhere
   }
 };
+export default fetchUserDetails;

@@ -4,7 +4,7 @@ import AuthContext from "../context/AuthContext";
 import refreshToken from "../apis/refreshToken";
 import axios from "../apis/axiosInstance";
 import Button from "../components/material3/Button";
-import { useNavigate } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { jwtTokenState, userState } from "../store/states";
 
@@ -34,7 +34,7 @@ function LoginPage() {
   };
 
   return (
-    <section className="flex items-center justify-center min-h-screen bg-gray-100">
+    <section className="flex items-center justify-center h-full min-h-full my-auto bg-gray-100">
       <div className="bg-white p-8 rounded-2xl shadow-md w-full max-w-sm">
         <h1 className="text-center mb-6 m3-title-large">Login</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">

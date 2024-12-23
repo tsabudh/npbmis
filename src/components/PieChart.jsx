@@ -13,11 +13,7 @@ const PieChart = ({ data }) => {
       {
         label: "# of Projects",
         data: [data.totalProjects, data.ongoingProjects, data.futureProjects],
-        backgroundColor: [
-          "rgba(54, 162, 235, 0.6)", // Blue
-          "rgba(75, 192, 192, 0.6)", // Green
-          "rgba(255, 206, 86, 0.6)", // Yellow
-        ],
+        backgroundColor: ["#194185", "#1570ef", "#84caff"],
         borderColor: [
           "rgba(54, 162, 235, 1)",
           "rgba(75, 192, 192, 1)",
