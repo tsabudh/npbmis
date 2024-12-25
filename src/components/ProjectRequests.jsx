@@ -26,7 +26,7 @@ function ProjectRequests() {
   const selectProject = (projectId) => {
     return projects?.find(
       (project) => project.project_id === parseInt(projectId)
-    ); // Ensure matching type
+    ); 
   };
 
   // Loading state
@@ -49,7 +49,7 @@ function ProjectRequests() {
 
   // Render the projects
   return (
-    <div>
+    <div className="_project-requests">
       <ul className="flex flex-col gap-3 px-4 pt-4">
         {projects?.map((project) => (
           <li key={project.project_id}>

@@ -61,7 +61,7 @@ function LayoutPage() {
 
       <Sidebar />
 
-      <main className="flex-1 flex w-full justify-start align-top">
+      <main className="_layout-outlet flex-1 flex w-full h-dvh justify-start align-top">
         <Outlet />
       </main>
     </div>

@@ -23,7 +23,8 @@ function LoginPage() {
       const response = await axios.post("/auth/login", data);
       console.log("Login successful:", response.data);
       setJwtToken(response.data.token);
-      setUser(response.data.user);
+      setUser((_) => response.data.user);
+      console.log("User:", response.data.user);
       navigate("/dashboard");
     } catch (error) {
       console.error(

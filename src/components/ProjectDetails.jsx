@@ -27,7 +27,11 @@ function ProjectDetails() {
       return <div>Project not found!</div>;
     }
 
-    return <Project project={project} />;
+    return (
+      <div className="_project-details overflow-auto">
+        <Project project={project} />
+      </div>
+    );
   }
 
   return <div>Choose a project</div>;

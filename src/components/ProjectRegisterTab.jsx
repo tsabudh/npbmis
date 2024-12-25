@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -11,6 +11,8 @@ import { jwtTokenState, sectorsState } from "../store/states";
 const ProjectRegisterTab = () => {
   const jwtToken = useRecoilValue(jwtTokenState);
   const sectors = useRecoilValue(sectorsState);
+  const [subSectors, setSubSectors] = useState([]); // State for sub-sectors
+
   console.log(sectors);
   const {
     register,
@@ -19,6 +21,15 @@ const ProjectRegisterTab = () => {
     watch,
     formState: { errors },
   } = useForm();
+
+  // Update sub-sectors dynamically when the sector changes
+  const handleSectorChange = (event) => {
+    const sectorId = event.target.value;
+    const selectedSector = sectors.find(
+      (sector) => sector.id === parseInt(sectorId, 10)
+    );
+    setSubSectors(selectedSector ? selectedSector.SubSectors : []);
+  };
 
   // Mutation for submitting the form
   const mutation = useMutation({
@@ -53,7 +64,7 @@ const ProjectRegisterTab = () => {
   };
 
   return (
-    <div className="max-w-4xl  p-4">
+    <div className="max-w-4xl h-auto  p-10">
       <h1 className="text-2xl font-bold mb-4">Add New Project</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div className="flex justify-start items-center gap-4">
@@ -122,6 +133,7 @@ const ProjectRegisterTab = () => {
           <select
             {...register("sector_id", { required: "Sector is required" })}
             className="w-full border border-gray-300 rounded-md p-2"
+            onChange={handleSectorChange}
           >
             <option value="">Select Sector</option>
             {/* Map over sectors and create options dynamically */}
@@ -133,6 +145,27 @@ const ProjectRegisterTab = () => {
           </select>
           {errors.sector && (
             <p className="text-error text-sm">{errors.sector.message}</p>
+          )}
+        </div>
+
+        {/* Sub-Sector Select */}
+        <div className="mt-4">
+          <label className="block font-medium">Sub-Sector</label>
+          <select
+            {...register("sub_sector_id", {
+              required: "Sub-Sector is required",
+            })}
+            className="w-full border border-gray-300 rounded-md p-2"
+          >
+            <option value="">Select Sub-Sector</option>
+            {subSectors?.map((subSector) => (
+              <option key={subSector.id} value={subSector.id}>
+                {subSector.name}
+              </option>
+            ))}
+          </select>
+          {errors.sub_sector_id && (
+            <p className="text-error text-sm">{errors.sub_sector_id.message}</p>
           )}
         </div>
 
@@ -575,7 +608,7 @@ const ProjectRegisterTab = () => {
             </p>
           )}
         </div>
-        <Button variant="filled" color="primary" type="submit">
+        <Button variant="filled" type="submit">
           {mutation.isLoading ? "Submitting..." : "Submit"}
         </Button>
       </form>

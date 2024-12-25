@@ -23,9 +23,7 @@ function ProjectOverviewTab() {
   });
   return (
     <section className="max-w-4xl p-4">
-      <header>
-        <h1 className="text-2xl font-bold mb-4">All projects</h1>
-      </header>
+      <header></header>
       <main>
         {
           <ul className="flex flex-col gap-3 px-4 pt-4">

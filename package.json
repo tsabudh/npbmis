@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ebay/nice-modal-react": "^1.2.13",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@material/web": "^2.2.0",

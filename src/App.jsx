@@ -28,6 +28,7 @@ import Project from "./components/Project";
 import ProjectDetails from "./components/ProjectDetails";
 import OverviewPage from "./components/OverviewPage";
 import PublicLayoutPage from "./components/PublicLayoutPage";
+import NiceModal from "@ebay/nice-modal-react";
 
 function App() {
   const [locale, setLocale] = useState("en");
@@ -46,35 +47,43 @@ function App() {
     >
       <QueryClientProvider client={queryClient}>
         <LocaleContext.Provider value={{ locale, setLocale }}>
-          <ToastContainer />
-          <Routes>
-            <Route path="" element={<PublicLayoutPage />}>
-              <Route index element={<LandingSection />} />
-              <Route path="/login" element={<LoginPage />} />
-            </Route>
-            <Route path="/dashboard" element={<LayoutPage />}>
-              <Route index element={<OverviewPage />} />
-              <Route path="account" element={<Account />} />
-              <Route path="notifications" element={<div>notifications</div>} />
-              <Route path="projects" element={<Board />}>
-                <Route index element={<ProjectOverviewTab />} />
-                <Route path="one" element={<ProjectDetails />}>
-                  <Route path=":projectId" element={<ProjectDetails />} />
-                </Route>
-                <Route path="register" element={<ProjectRegisterTab />} />
-                <Route path="edit" element={<ProjectEditTab />}>
-                  <Route path=":projectId" element={<ProjectEditDetails />} />
-                </Route>
-                <Route path="drafts" element={<ProjectDrafts />}>
-                  <Route path=":projectId" element={<ProjectEditDetails />} />
-                </Route>
-                <Route path="requests" element={<ProjectRequests />}>
-                  <Route path=":projectId" element={<ProjectRequestDetail />} />
-                </Route>
-                <Route path="*" element={<div>Not found</div>} />
+          <NiceModal.Provider>
+            <ToastContainer />
+            <Routes>
+              <Route path="" element={<PublicLayoutPage />}>
+                <Route index element={<LandingSection />} />
+                <Route path="/login" element={<LoginPage />} />
               </Route>
-            </Route>
-          </Routes>
+              <Route path="/dashboard" element={<LayoutPage />}>
+                <Route index element={<OverviewPage />} />
+                <Route path="account" element={<Account />} />
+                <Route
+                  path="notifications"
+                  element={<div>notifications</div>}
+                />
+                <Route path="projects" element={<Board />}>
+                  <Route index element={<ProjectOverviewTab />} />
+                  <Route path="one" element={<ProjectDetails />}>
+                    <Route path=":projectId" element={<ProjectDetails />} />
+                  </Route>
+                  <Route path="register" element={<ProjectRegisterTab />} />
+                  <Route path="edit" element={<ProjectEditTab />}>
+                    <Route path=":projectId" element={<ProjectEditDetails />} />
+                  </Route>
+                  <Route path="drafts" element={<ProjectDrafts />}>
+                    <Route path=":projectId" element={<ProjectEditDetails />} />
+                  </Route>
+                  <Route path="requests" element={<ProjectRequests />}>
+                    <Route
+                      path=":projectId"
+                      element={<ProjectRequestDetail />}
+                    />
+                  </Route>
+                  <Route path="*" element={<div>Not found</div>} />
+                </Route>
+              </Route>
+            </Routes>
+          </NiceModal.Provider>
         </LocaleContext.Provider>
       </QueryClientProvider>
     </AuthContext.Provider>

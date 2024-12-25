@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
@@ -11,13 +11,35 @@ import { useNavigate } from "react-router-dom";
 import { saveDraftProject } from "../apis/saveDraftProject";
 import { submitProject } from "../apis/submitProject";
 import { prepareProject } from "../apis/prepareProject";
+import { SDG_OBJECT } from "../assets/constants/sdg";
 
 const ProjectEditDetails = ({ project }) => {
   const jwtToken = useRecoilValue(jwtTokenState);
   const navigate = useNavigate();
   const user = useRecoilValue(userState);
   const sectors = useRecoilValue(sectorsState);
+  console.log(sectors);
+  const [subSectors, setSubSectors] = useState([]); // State for sub-sectors
+  const [selectedSDG, setSelectedSDG] = useState("");
 
+  // Update sub-sectors dynamically when the sector changes
+  const handleSectorChange = (event) => {
+    const sectorId = event.target.value;
+    const selectedSector = sectors?.find(
+      (sector) => sector.id === parseInt(sectorId, 10)
+    );
+    setSubSectors(selectedSector ? selectedSector.SubSectors : []);
+  };
+
+  const handleSDGChange = (event) => {
+    const selectedCode = event.target.value;
+    setSelectedSDG(selectedCode);
+    console.log("code changed");
+    if (SDG_OBJECT[selectedCode]) {
+      setValue("sdg_code", selectedCode); // Set the SDG Code
+      setValue("sdg_name", SDG_OBJECT[selectedCode].name); // Set the SDG Name
+    }
+  };
   const {
     register,
     handleSubmit,
@@ -61,6 +83,27 @@ const ProjectEditDetails = ({ project }) => {
   });
 
   const nepaliName = watch("nepali_name");
+
+  const selectedSectorId = watch("sector_id");
+
+  // Load initial sub-sectors when the component mounts or when `sector_id` changes
+  useEffect(() => {
+    if (selectedSectorId) {
+      const selectedSector = sectors.find(
+        (sector) => sector.id === parseInt(selectedSectorId, 10)
+      );
+      setSubSectors(selectedSector ? selectedSector.SubSectors : []);
+    }
+  }, [selectedSectorId, sectors]);
+
+  useEffect(() => {
+    if (project?.sdg_code) {
+      setSelectedSDG(project.sdg_code); // Set the selected SDG
+      setValue("sdg_code", project.sdg_code); // Set the sdg_code in form
+      setValue("sdg_name", SDG_OBJECT[project.sdg_code]?.name || ""); // Set the sdg_name in form
+    }
+  }, [project, setValue]);
+
   const onSave = (data) => {
     const payload = data; // Here, data is already prepared from form input
     saveDraftProject({ payload, jwtToken })
@@ -162,6 +205,7 @@ const ProjectEditDetails = ({ project }) => {
           <select
             {...register("sector_id", { required: "Sector is required" })}
             className="w-full border border-gray-300 rounded-md p-2"
+            onChange={handleSectorChange}
           >
             <option value="">Select Sector</option>
             {/* Map over sectors and create options dynamically */}
@@ -173,6 +217,27 @@ const ProjectEditDetails = ({ project }) => {
           </select>
           {errors.sector && (
             <p className="text-error text-sm">{errors.sector.message}</p>
+          )}
+        </div>
+
+        {/* Sub-Sector Select */}
+        <div className="mt-4">
+          <label className="block font-medium">Sub-Sector</label>
+          <select
+            {...register("sub_sector_id", {
+              required: "Sub-Sector is required",
+            })}
+            className="w-full border border-gray-300 rounded-md p-2"
+          >
+            <option value="">Select Sub-Sector</option>
+            {subSectors?.map((subSector) => (
+              <option key={subSector.id} value={subSector.id}>
+                {subSector.name}
+              </option>
+            ))}
+          </select>
+          {errors.sub_sector_id && (
+            <p className="text-error text-sm">{errors.sub_sector_id.message}</p>
           )}
         </div>
 
@@ -388,25 +453,21 @@ const ProjectEditDetails = ({ project }) => {
           </div>
         </div>
 
-        {/* SDG Code */}
+        {/* SDG Code and Name */}
         <div>
-          <label className="block font-medium">SDG Code</label>
-          <input
-            {...register("sdg_code", { required: "SDG Code is required" })}
+          <label className="block font-medium">Select SDG</label>
+          <select
+            value={selectedSDG}
+            onChange={handleSDGChange}
             className="w-full border border-gray-300 rounded-md p-2"
-          />
-          {errors.sdg_code && (
-            <p className="text-red-500 text-sm">{errors.sdg_code.message}</p>
-          )}
-        </div>
-
-        {/* SDG Name */}
-        <div>
-          <label className="block font-medium">SDG Name</label>
-          <input
-            {...register("sdg_name", { required: "SDG Name is required" })}
-            className="w-full border border-gray-300 rounded-md p-2"
-          />
+          >
+            <option value="">Select SDG</option>
+            {Object.keys(SDG_OBJECT).map((code) => (
+              <option key={code} value={code}>
+                {SDG_OBJECT[code].name}
+              </option>
+            ))}
+          </select>
           {errors.sdg_name && (
             <p className="text-red-500 text-sm">{errors.sdg_name.message}</p>
           )}

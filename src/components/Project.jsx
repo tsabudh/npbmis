@@ -79,7 +79,7 @@ function Project({ project }) {
           </strong>
           {project.implementation_method}
         </p>
-        <p>
+        <div>
           <strong className="font-medium text-gray-700">Prepared By:</strong>
 
           <div className="flex gap-1 flex-col">
@@ -92,7 +92,7 @@ function Project({ project }) {
               <span> {project.prepared_by_name}</span>
             </p>
           </div>
-        </p>
+        </div>
 
         <p>
           <strong className="font-medium text-gray-700">Requested By:</strong>

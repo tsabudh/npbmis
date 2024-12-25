@@ -58,7 +58,7 @@ function ProjectDrafts() {
   return (
     <div>
       <ul className="flex flex-col gap-3 px-4 pt-4">
-        {projects.length == 0 ? (
+        {projects?.length == 0 ? (
           <div className="text-center">No projects found</div>
         ) : null}
         {projects?.map((project) => (
