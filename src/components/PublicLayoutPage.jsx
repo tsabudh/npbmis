@@ -10,7 +10,7 @@ function PublicLayoutPage() {
     <section className={"flex flex-col bg-blue-fair-50  min-h-dvh"}>
       <nav className="_navbar sticky top-0 flex items-center justify-between shadow-md p-2">
         <div className="_brand flex items-center justify-start">
-          <figure>
+          <figure onClick={() => navigate("/")} className="cursor-pointer">
             <img
               src="/images/emblem.png"
               alt="Project Bank Information Management System"

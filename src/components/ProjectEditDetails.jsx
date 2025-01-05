@@ -18,7 +18,6 @@ const ProjectEditDetails = ({ project }) => {
   const navigate = useNavigate();
   const user = useRecoilValue(userState);
   const sectors = useRecoilValue(sectorsState);
-  console.log(sectors);
   const [subSectors, setSubSectors] = useState([]); // State for sub-sectors
   const [selectedSDG, setSelectedSDG] = useState("");
 

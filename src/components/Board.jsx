@@ -23,7 +23,7 @@ const tabItems = [
     to: "/drafts",
   },
   {
-    name: "Requests",
+    name: "Status",
     to: "/requests",
   },
   {

@@ -19,18 +19,21 @@ import ProjectOverviewTab from "./components/ProjectOverviewTab";
 import ProjectRequests from "./components/ProjectRequests";
 import ProjectRequestDetail from "./components/ProjectRequestDetail";
 import Account from "./components/Account";
-import ProjectEdit from "./components/ProjectEditTab";
 import ProjectRegisterTab from "./components/ProjectRegisterTab";
 import ProjectEditTab from "./components/ProjectEditTab";
 import ProjectEditDetails from "./components/ProjectEditDetails";
-import ProjectDrafts from "./components/ProjectDrafts";
 import Project from "./components/Project";
 import ProjectDetails from "./components/ProjectDetails";
 import OverviewPage from "./components/OverviewPage";
 import PublicLayoutPage from "./components/PublicLayoutPage";
 import NiceModal from "@ebay/nice-modal-react";
+import useDetectMobile from "./hooks/useDetectMobile";
+import ProjectDraftsTab from "./components/ProjectDraftsTab";
+import NotificationBoard from "./components/NotificationBoard";
 
 function App() {
+  useDetectMobile();
+
   const [locale, setLocale] = useState("en");
   const [jwtToken, setJwtToken] = useState(localStorage.getItem("jwtToken"));
   const [user, setUser] = useState(getUserFromLocalStorage());
@@ -57,10 +60,7 @@ function App() {
               <Route path="/dashboard" element={<LayoutPage />}>
                 <Route index element={<OverviewPage />} />
                 <Route path="account" element={<Account />} />
-                <Route
-                  path="notifications"
-                  element={<div>notifications</div>}
-                />
+                <Route path="notifications" element={<NotificationBoard />} />
                 <Route path="projects" element={<Board />}>
                   <Route index element={<ProjectOverviewTab />} />
                   <Route path="one" element={<ProjectDetails />}>
@@ -70,8 +70,8 @@ function App() {
                   <Route path="edit" element={<ProjectEditTab />}>
                     <Route path=":projectId" element={<ProjectEditDetails />} />
                   </Route>
-                  <Route path="drafts" element={<ProjectDrafts />}>
-                    <Route path=":projectId" element={<ProjectEditDetails />} />
+                  <Route path="drafts" element={<ProjectDraftsTab />}>
+                    <Route path=":projectId" element={<Project />} />
                   </Route>
                   <Route path="requests" element={<ProjectRequests />}>
                     <Route

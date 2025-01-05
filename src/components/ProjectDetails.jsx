@@ -23,8 +23,8 @@ function ProjectDetails() {
   });
 
   if (projectId) {
-    if (!project) {
-      return <div>Project not found!</div>;
+    if (isLoading) {
+      return <div>Loading...</div>;
     }
 
     return (

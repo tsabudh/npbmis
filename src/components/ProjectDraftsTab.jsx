@@ -9,15 +9,16 @@ import { Outlet, useNavigate, useParams } from "react-router-dom";
 import Project from "./Project";
 import ProjectRequestDetail from "./ProjectRequestDetail";
 import ProjectEditDetails from "./ProjectEditDetails";
+import ProjectDraftView from "./ProjectDraftView";
 
-function ProjectDrafts() {
+function ProjectDraftsTab() {
   const jwtToken = useRecoilValue(jwtTokenState);
   const [projects, setProjects] = useState([]);
 
   const navigate = useNavigate();
   const { projectId } = useParams();
   const { data, error, isLoading, isError } = useQuery({
-    queryKey: ["draftProjects", "projects"],
+    queryKey: ["projects", "assigned"],
     queryFn: () => fetchAssignedProjects(jwtToken),
   });
 
@@ -29,11 +30,14 @@ function ProjectDrafts() {
     setProjects(projects);
   }, [data]);
 
-  console.log(projects);
   const selectProject = (projectId) => {
     return projects?.find(
       (project) => project.project_id === parseInt(projectId)
     ); // Ensure matching type
+  };
+
+  const handleView = (project) => {
+    return <Project project={project} />;
   };
 
   // Loading state
@@ -51,7 +55,7 @@ function ProjectDrafts() {
     if (!project) {
       return <div>Project not found!</div>;
     }
-    return <ProjectEditDetails project={project} />;
+    return <ProjectDraftView project={project} />;
   }
 
   // Render the projects
@@ -66,9 +70,9 @@ function ProjectDrafts() {
             <ProjectCard
               project={project}
               onClick={() =>
-                navigate(`/dashboard/projects/edit/${project.project_id}`)
+                navigate(`/dashboard/projects/drafts/${project.project_id}`)
               }
-              forEdit={true}
+              forEdit={false}
             />
           </li>
         ))}
@@ -77,4 +81,4 @@ function ProjectDrafts() {
   );
 }
 
-export default ProjectDrafts;
+export default ProjectDraftsTab;
