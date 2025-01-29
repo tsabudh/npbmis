@@ -4,7 +4,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import LocaleContext from "./context/LocaleContext";
 
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import LoginPage from "./pages/LoginPage";
@@ -30,6 +30,13 @@ import NiceModal from "@ebay/nice-modal-react";
 import useDetectMobile from "./hooks/useDetectMobile";
 import ProjectDraftsTab from "./components/ProjectDraftsTab";
 import NotificationBoard from "./components/NotificationBoard";
+import AdminLayoutPage from "./pages/AdminLayoutPage";
+import AccountManagementBoard from "./components/AccountManagementBoard";
+import AccountsOverview from "./components/AccountsOverview";
+import AccountRegister from "./components/AccountRegister";
+import PalikaManagementBoard from "./components/PalikaManagementBoard";
+import PalikaOverview from "./components/PalikaOverview";
+import PalikaManagement from "./components/PalikaManagement";
 
 function App() {
   useDetectMobile();
@@ -80,6 +87,23 @@ function App() {
                     />
                   </Route>
                   <Route path="*" element={<div>Not found</div>} />
+                </Route>
+              </Route>
+              <Route path="/admin" element={<AdminLayoutPage />}>
+                <Route path="palika" element={<PalikaManagementBoard />}>
+                  <Route
+                    index
+                    element={<Navigate to="/admin/palika/manage" replace />}
+                  />
+                  <Route path="manage" element={<PalikaManagement />} />
+                </Route>
+                <Route path="accounts" element={<AccountManagementBoard />}>
+                  <Route
+                    index
+                    element={<Navigate to="/admin/accounts/overview" replace />}
+                  />
+                  <Route path="overview" element={<AccountsOverview />} />
+                  <Route path="register" element={<AccountRegister />} />
                 </Route>
               </Route>
             </Routes>

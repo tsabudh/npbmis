@@ -40,3 +40,9 @@ export const sectorsState = atom({
   default: null, // Default value
   effects_UNSTABLE: [persistAtom], // Persistence effect
 });
+
+export const palikaState = atom({
+  key: "palika", // Unique key for this atom
+  default: null, // Default value
+  effects_UNSTABLE: [persistAtom], // Persistence effect
+});

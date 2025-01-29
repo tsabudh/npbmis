@@ -1,4 +1,5 @@
 import axios from "axios";
+import process from "process";
 
 const API_URI = process.env.API_URI || "http://localhost:3000/api/v1";
 //

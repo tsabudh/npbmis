@@ -7,6 +7,8 @@ import Button from "../components/material3/Button";
 import { useMatch, useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { jwtTokenState, userState } from "../store/states";
+import { loginUser } from "../apis/loginUser";
+import { toast } from "react-toastify";
 
 function LoginPage() {
   const {
@@ -15,18 +17,22 @@ function LoginPage() {
     formState: { errors },
   } = useForm();
   const [jwtToken, setJwtToken] = useRecoilState(jwtTokenState);
-  const [user, setUser] = useRecoilState(userState);
+  // const [user, setUser] = useRecoilState(userState);
   const navigate = useNavigate();
 
   const onSubmit = async (data) => {
     try {
-      const response = await axios.post("/auth/login", data);
-      console.log("Login successful:", response.data);
-      setJwtToken(response.data.token);
-      setUser((_) => response.data.user);
-      console.log("User:", response.data.user);
-      navigate("/dashboard");
+      const response = await loginUser({ payload: data });
+      setJwtToken(response.token);
+
+      console.log("role", response);
+      if (response.role === "ADMIN") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
+      toast.error(error.message);
       console.error(
         "Error during login:",
         error.response?.data || error.message
